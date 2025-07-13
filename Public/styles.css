@@ -1,0 +1,54 @@
+/* public/styles.css */
+
+/* Custom Navbar Styling */
+.custom-navbar {
+  background-color: #ab94d3; /* Palatinate background */
+}
+
+/* Rower Card Styling */
+.rower-card {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.rower-card:hover {
+  transform: scale(1.02); /* Slightly enlarge the card on hover */
+}
+
+/* Crew Box Styling */
+.crew-box {
+  min-height: 150px; /* Minimum height to allow dropping */
+  background-color: #f0f8ff; /* Pretty much white background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Padding inside the box */
+  transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.crew-box:hover {
+  background-color: #bbdefb; /* Darker blue on hover */
+}
+
+/* Error Alert Styling */
+#errorAlert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Ensure the alert stays on top */
+}
+
+/* --- Increased Size and Enhanced Styling for Rowers List Container --- */
+#rowersContainer {
+  min-height: 400px; /* Sets a larger minimum height for better visibility */
+  border-radius: 8px; /* Rounded corners for aesthetic appeal */
+  padding: 10px; /* Adds padding inside the container */
+  background-color: #ffffff; /* Light background color to distinguish the area */
+  overflow-y: auto; /* Enables vertical scrolling if content exceeds the container's height */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover effects */
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+}
+
+/* Change background and border color on drag over */
+#rowersContainer.drag-over {
+  background-color: #e0f7fa; /* Slightly darker background when a draggable item is over */
+  border-color: #00796b; /* Darker border color to highlight the drop zone */
+}

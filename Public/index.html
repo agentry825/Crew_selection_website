@@ -1,0 +1,172 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"> <!-- Specifies the character encoding for the HTML document -->
+  <title>Rowing App</title> <!-- Sets the title of the webpage, displayed in the browser tab -->
+  
+  <!-- Bootstrap CSS -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet"
+  >
+  <!-- Link to Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css"> <!-- Includes custom CSS styles for additional styling -->
+</head>
+<body class="bg-light"> <!-- Applies a light background color to the entire body using Bootstrap's bg-light class -->
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Rowing Management</span> <!-- Brand name displayed on the navbar -->
+    </div>
+  </nav>
+
+  <div class="container my-4"> <!-- Main container with vertical margin (my-4) for spacing -->
+
+    <!-- ERROR ALERT (Initially Hidden) -->
+    <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+      <strong>Error:</strong> Server is unreachable. Please check your connection or try again later.
+    </div>
+    <!-- 
+      This alert is used to display error messages to the user.
+      It is initially hidden using the 'd-none' class and is shown by removing this class via JavaScript when an error occurs.
+    -->
+
+    <div class="row g-4"> <!-- Bootstrap grid row with gutters (g-4) for spacing between columns -->
+      <!-- LEFT COLUMN -->
+      <div class="col-md-6"> <!-- Bootstrap grid column that spans 6 out of 12 columns on medium and larger screens -->
+
+        <!-- Add New Rower Card -->
+        <div class="card shadow"> <!-- Bootstrap card component with a shadow for elevation effect -->
+          <!-- UPDATED COLOR: #48A6A7 -->
+          <div class="card-header text-white" style="background-color: #5c2d6d;">
+            <h5 class="mb-0">Add a New Rower</h5> <!-- Card header with title -->
+          </div>
+          <div class="card-body"> <!-- Card body containing the form for adding a new rower -->
+            <form id="rowerForm" class="row g-2"> <!-- Form with Bootstrap grid row and gutters (g-2) for spacing between form fields -->
+              <!-- Rower Name Input -->
+              <div class="col-md-6">
+                <label for="rowerName" class="form-label">Name</label> <!-- Label for the rower name input -->
+                <input type="text" class="form-control" id="rowerName" required> <!-- Text input for rower's name; required field -->
+              </div>
+              <!-- Rower Height Input -->
+              <div class="col-md-6">
+                <label for="rowerHeight" class="form-label">Height (cm)</label> <!-- Label for the rower height input -->
+                <input type="number" class="form-control" id="rowerHeight"> <!-- Number input for rower's height in centimeters -->
+              </div>
+              <!-- Rower Weight Input -->
+              <div class="col-md-6">
+                <label for="rowerWeight" class="form-label">Weight (kg)</label> <!-- Label for the rower weight input -->
+                <input type="number" class="form-control" id="rowerWeight"> <!-- Number input for rower's weight in kilograms -->
+              </div>
+              <!-- Rower 2K Time Input -->
+              <div class="col-md-6">
+                <label for="rower2kTime" class="form-label">2K Time (mm:ss)</label> <!-- Label for the rower 2K time input -->
+                <input type="text" class="form-control" id="rower2kTime"> <!-- Text input for rower's 2K time in minutes and seconds -->
+              </div>
+              <!-- Rower Photo File Input -->
+              <div class="col-md-6">
+                <label for="rowerPhotoFile" class="form-label">Photo File</label> <!-- Label for the rower photo file input -->
+                <input type="file" class="form-control" id="rowerPhotoFile" accept="image/*"> <!-- File input for uploading rower's photo; accepts only image files -->
+              </div>
+              <!-- Rower Illness Checkbox -->
+              <div class="col-md-6 d-flex align-items-center">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="rowerIsIll"> <!-- Checkbox to indicate if the rower is currently ill -->
+                  <label class="form-check-label" for="rowerIsIll">
+                    Currently Ill?
+                  </label>
+                </div>
+              </div>
+              <!-- Submit Button -->
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-light">Add Rower</button> <!-- Button to submit the form and add a new rower -->
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Rowers List Card -->
+        <div class="card shadow mt-4"> <!-- Bootstrap card component with a top margin (mt-4) for spacing -->
+          <!-- UPDATED COLOR: #9ACBD0 -->
+          <div class="card-header text-white" style="background-color: #834887;">
+            <h5 class="mb-0">Rowers List (Drag to or from a Crew)</h5> <!-- Card header with title -->
+          </div>
+          <div class="card-body" id="rowersContainer">
+            <!-- Rower cards inserted by client.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-md-6"> <!-- Bootstrap grid column that spans 6 out of 12 columns on medium and larger screens -->
+
+        <!-- Add New Crew Card -->
+        <div class="card shadow"> <!-- Bootstrap card component with a shadow for elevation effect -->
+          <!-- UPDATED COLOR: #48A6A7 -->
+          <div class="card-header text-white" style="background-color: #5c2d6d;">
+            <h5 class="mb-0">Add a New Crew</h5> <!-- Card header with title -->
+          </div>
+          <div class="card-body"> <!-- Card body containing the form for adding a new crew -->
+            <form id="crewForm" class="row g-2"> <!-- Form with Bootstrap grid row and gutters (g-2) for spacing between form fields -->
+              <!-- Crew Name Input -->
+              <div class="col-12">
+                <label for="crewName" class="form-label">Crew Name</label> <!-- Label for the crew name input -->
+                <input type="text" class="form-control" id="crewName" required> <!-- Text input for crew's name; required field -->
+              </div>
+              <!-- Submit Button -->
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-light">Add Crew</button> <!-- Button to submit the form and add a new crew -->
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Crews List Card -->
+        <div class="card shadow mt-4"> <!-- Bootstrap card component with a top margin (mt-4) for spacing -->
+          <!-- UPDATED COLOR: #2973B2 -->
+          <div class="card-header text-white" style="background-color: #834887;">
+            <h5 class="mb-0">Crews (Drag Rowers Here or Drag Them Out)</h5> <!-- Card header with title -->
+          </div>
+          <div class="card-body" id="crewsContainer">
+            <!-- Crew boxes inserted by client.js -->
+          </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="mt-3 d-flex gap-2"> <!-- Container with top margin (mt-3) and flexbox for spacing between buttons -->
+          <button id="exportTxtBtn" class="btn btn-outline-primary">Export as TXT</button> <!-- Button to export crew data as TXT -->
+          <button id="exportCsvBtn" class="btn btn-outline-secondary">Export as CSV</button> <!-- Button to export crew data as CSV -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rower Detail Modal -->
+  <div class="modal fade" id="rowerModal" tabindex="-1" aria-labelledby="rowerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="rowerModalLabel">Rower Details</h1> <!-- Modal title -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Close button for the modal -->
+        </div>
+        <div class="modal-body"> <!-- Modal body containing rower details -->
+          <img id="modalRowerPhoto" src="" alt="Rower Photo" class="mb-3" style="max-width:100%;"> <!-- Image element for rower's photo -->
+          <p><strong>ID:</strong> <span id="modalRowerId"></span></p> <!-- Displays rower's ID -->
+          <p><strong>Name:</strong> <span id="modalRowerName"></span></p> <!-- Displays rower's name -->
+          <p><strong>Height:</strong> <span id="modalRowerHeight"></span> cm</p> <!-- Displays rower's height -->
+          <p><strong>Weight:</strong> <span id="modalRowerWeight"></span> kg</p> <!-- Displays rower's weight -->
+          <p><strong>2K Time:</strong> <span id="modalRower2kTime"></span></p> <!-- Displays rower's 2K time -->
+          <p><strong>Currently Ill?:</strong> <span id="modalRowerIll"></span></p> <!-- Displays rower's illness status -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- Includes Bootstrap's JavaScript bundle for interactive components -->
+  <!-- Our Client JS -->
+  <script src="client.js"></script> <!-- Includes the custom client-side JavaScript -->
+</body>
+</html>

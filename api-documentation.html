@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rowing Management App API Documentation</title>
+  
+  <!-- Bootstrap CSS for styling -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet"
+  >
+  
+  <!-- Custom Styles -->
+  <style>
+    body {
+      padding-top: 60px;
+    }
+    .api-section {
+      margin-bottom: 40px;
+    }
+    .endpoint {
+      margin-bottom: 30px;
+    }
+    .endpoint-method {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    .response-code {
+      font-weight: bold;
+      color: #dc3545;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      padding-top: 20px;
+      background-color: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+    }
+    .content {
+      margin-left: 270px;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      color: #0d6efd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Rowing Management API</a>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <nav class="nav flex-column">
+      <a class="nav-link active" href="#introduction">Introduction</a>
+      <a class="nav-link" href="#authentication">Authentication</a>
+      <a class="nav-link" href="#error-codes">Error Codes</a>
+      <a class="nav-link" href="#rowers">Rowers</a>
+      <a class="nav-link" href="#crews">Crews</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container content">
+    
+    <!-- Introduction -->
+    <section id="introduction" class="api-section">
+      <h2>Introduction</h2>
+      <p>Welcome to the Rowing Management App API documentation. This API allows you to manage rowers and crews, including creating and retrieving rowers and crews, as well as assigning rowers to crews. The API follows RESTful principles and provides endpoints for seamless integration with your applications.</p>
+      <p><strong>Note:</strong> This API currently supports only <code>GET</code> and <code>POST</code> methods for managing entities. Editing and deleting rowers or crews after creation is not supported.</p>
+    </section>
+    
+    <!-- Authentication -->
+    <section id="authentication" class="api-section">
+      <h2>Authentication</h2>
+      <p>Currently, the Rowing Management App API does not require authentication for accessing its endpoints. However, for production environments, it is recommended to implement authentication and authorization mechanisms to secure the API.</p>
+    </section>
+    
+    <!-- Error Codes -->
+    <section id="error-codes" class="api-section">
+      <h2>Error Codes</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Status Code</th>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>400 Bad Request</td>
+            <td>Invalid Input</td>
+            <td>The request could not be understood or was missing required parameters.</td>
+          </tr>
+          <tr>
+            <td>404 Not Found</td>
+            <td>Resource Not Found</td>
+            <td>The requested resource does not exist.</td>
+          </tr>
+          <tr>
+            <td>500 Internal Server Error</td>
+            <td>Server Error</td>
+            <td>An error occurred on the server.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Rowers -->
+    <section id="rowers" class="api-section">
+      <h2>Rowers</h2>
+      
+      <!-- GET /rowers -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">GET</span> /rowers</h4>
+        <p>Retrieve a list of all rowers with minimal information (ID and Name).</p>
+        
+        <h5>Response</h5>
+        <pre>{
+  "rowers": [
+    {
+      "id": 1,
+      "name": "John Doe"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith"
+    }
+  ]
+}</pre>
+      </div>
+      
+      <!-- GET /rowers/:id -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">GET</span> /rowers/{id}</h4>
+        <p>Retrieve detailed information about a specific rower by their ID.</p>
+        
+        <h5>Path Parameters</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td>integer</td>
+              <td>The unique identifier of the rower.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Response</h5>
+        <pre>{
+  "id": 1,
+  "name": "John Doe",
+  "height": 190,
+  "weight": 85,
+  "twoKTime": "6:30",
+  "isIll": false,
+  "photoUrl": "/uploads/john_doe.png"
+}</pre>
+      </div>
+      
+      <!-- POST /rowers -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">POST</span> /rowers</h4>
+        <p>Add a new rower to the system.</p>
+        
+        <h5>Request Body</h5>
+        <p>Multipart/form-data with the following fields:</p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td>string</td>
+              <td>Yes</td>
+              <td>The name of the rower.</td>
+            </tr>
+            <tr>
+              <td>height</td>
+              <td>integer</td>
+              <td>No</td>
+              <td>The height of the rower in centimeters.</td>
+            </tr>
+            <tr>
+              <td>weight</td>
+              <td>integer</td>
+              <td>No</td>
+              <td>The weight of the rower in kilograms.</td>
+            </tr>
+            <tr>
+              <td>twoKTime</td>
+              <td>string</td>
+              <td>No</td>
+              <td>The 2K rowing time in mm:ss format.</td>
+            </tr>
+            <tr>
+              <td>isIll</td>
+              <td>boolean</td>
+              <td>No</td>
+              <td>Indicates if the rower is currently ill.</td>
+            </tr>
+            <tr>
+              <td>photo</td>
+              <td>file</td>
+              <td>No</td>
+              <td>Optional photo of the rower (JPEG or PNG format).</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Response</h5>
+        <pre>{
+  "id": 2,
+  "name": "Jane Smith",
+  "height": 175,
+  "weight": 70,
+  "twoKTime": "6:45",
+  "isIll": false,
+  "photoUrl": "/uploads/jane_smith.png"
+}</pre>
+      </div>
+      
+    </section>
+    
+    <!-- Crews -->
+    <section id="crews" class="api-section">
+      <h2>Crews</h2>
+      
+      <!-- GET /crews -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">GET</span> /crews</h4>
+        <p>Retrieve a list of all crews with minimal information (ID and Name).</p>
+        
+        <h5>Response</h5>
+        <pre>{
+  "crews": [
+    {
+      "id": 1,
+      "name": "Men's 8+"
+    },
+    {
+      "id": 2,
+      "name": "Women's 4-"
+    }
+  ]
+}</pre>
+      </div>
+      
+      <!-- GET /crews/:id -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">GET</span> /crews/{id}</h4>
+        <p>Retrieve detailed information about a specific crew by its ID.</p>
+        
+        <h5>Path Parameters</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td>integer</td>
+              <td>The unique identifier of the crew.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Response</h5>
+        <pre>{
+  "id": 1,
+  "name": "Men's 8+",
+  "rowerIds": [1, 2, 3]
+}</pre>
+      </div>
+      
+      <!-- POST /crews -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">POST</span> /crews</h4>
+        <p>Add a new crew to the system.</p>
+        
+        <h5>Request Body</h5>
+        <p>JSON object with the following fields:</p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td>string</td>
+              <td>Yes</td>
+              <td>The name of the crew.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Response</h5>
+        <pre>{
+  "id": 2,
+  "name": "Women's 4-",
+  "rowerIds": []
+}</pre>
+      </div>
+      
+      <!-- POST /crews/:id/addRower -->
+      <div class="endpoint">
+        <h4><span class="endpoint-method">POST</span> /crews/{id}/addRower</h4>
+        <p>Add a rower to a specific crew.</p>
+        
+        <h5>Path Parameters</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td>integer</td>
+              <td>The unique identifier of the crew.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Request Body</h5>
+        <p>JSON object with the following field:</p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>rowerId</td>
+              <td>integer</td>
+              <td>The unique identifier of the rower to add.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h5>Response</h5>
+        <pre>{
+  "id": 1,
+  "name": "Men's 8+",
+  "rowerIds": [1, 2, 3, 4]
+}</pre>
+      </div>
+      
+    </section>
+    
+    <!-- Footer -->
+    <footer class="text-center py-4">
+      <p>&copy; 2025 Rowing Management App. All rights reserved.</p>
+    </footer>
+    
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+//documentation is based off https://platform.openai.com/docs/api-reference/introduction//
